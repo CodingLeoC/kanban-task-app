@@ -6,14 +6,14 @@ import { Task } from '@/types';
 
 export default function KanbanBoard() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Example Task', description: 'This is an example task', status: 'todo' },
+    { id: '1', title: 'Example Task', description: 'This is an example task', status: 'todo', dueDate: '2025-01-17' },
   ]);
 
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('taskId', taskId);
   };
 
-  const handleDrop = (e: React.DragEvent, status: 'todo' | 'in-progress' | 'done') => {
+  const handleDrop = (e: React.DragEvent, status: 'todo' | 'in-progress' | 'pending' | 'done') => {
     const taskId = e.dataTransfer.getData('taskId');
     setTasks(tasks.map(task => 
       task.id === taskId ? { ...task, status } : task
@@ -44,6 +44,12 @@ export default function KanbanBoard() {
           tasks={tasks.filter(task => task.status === 'in-progress')}
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'in-progress')}
+        />
+        <KanbanColumn
+          title="Pending"
+          tasks={tasks.filter(task => task.status === 'pending')}
+          onDragStart={handleDragStart}
+          onDrop={(e) => handleDrop(e, 'pending')}
         />
         <KanbanColumn
           title="Done"
