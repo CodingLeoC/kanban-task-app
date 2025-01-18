@@ -1,33 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanban Task App
+
+A modern, responsive Kanban board application built with Next.js and TailwindCSS. This app helps you organize your tasks with a beautiful drag-and-drop interface and clean design.
+
+## About This Project
+
+*This project serves as a demonstration of the capabilities of the AI code editor, Windsurf. Most of the codebase, including this README, was generated with the assistance of Windsurf. The goal is to explore the potential of this AI-powered tool and see how far it can take a development project.*
+
+## Features
+
+- Drag and drop tasks between columns
+- Clean, modern UI with TailwindCSS
+- Fully responsive design
+- Real-time updates
+- Task priority management
+- Due date tracking
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) - React framework
+- [TailwindCSS](https://tailwindcss.com) - Styling
+- [HeadlessUI](https://headlessui.com) - UI components
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [date-fns](https://date-fns.org/) - Date formatting
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  ├── components/     # React components
+  ├── app/           # Next.js app router
+  ├── types/         # TypeScript types
+  └── utils/         # Utility functions
+```
 
 ## Deploy on Vercel
 
