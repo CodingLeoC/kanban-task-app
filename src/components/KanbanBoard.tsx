@@ -6,7 +6,7 @@ import { Task } from '@/types';
 
 export default function KanbanBoard() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: '1', title: 'Example Task', description: 'This is an example task', status: 'todo', dueDate: '2025-01-17' },
+    { id: '1', title: 'Example Task', description: 'This is an example task', status: 'todo', priority: 'low', dueDate: '2025-01-17' },
   ]);
 
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
