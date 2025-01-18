@@ -10,19 +10,21 @@ interface TaskCardProps {
 export default function TaskCard({ task, onDragStart }: TaskCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const backgroundColors = {
-    'todo': 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 hover:from-blue-100 hover:to-blue-200',
-    'in-progress': 'bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:from-amber-100 hover:to-amber-200',
-    'pending': 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200 hover:from-purple-100 hover:to-purple-200',
-    'done': 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:from-emerald-100 hover:to-emerald-200'
-  }[task.status];
+  const backgroundColors = task.status === 'done' 
+    ? 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 hover:from-gray-100 hover:to-gray-200'
+    : {
+      'high': 'bg-gradient-to-br from-red-50 to-red-100 border-red-200 hover:from-red-100 hover:to-red-200',
+      'medium': 'bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 hover:from-amber-100 hover:to-amber-200',
+      'low': 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 hover:from-emerald-100 hover:to-emerald-200'
+    }[task.priority || 'low'];
 
-  const textColors = {
-    'todo': 'text-blue-800',
-    'in-progress': 'text-amber-800',
-    'pending': 'text-purple-800',
-    'done': 'text-emerald-800'
-  }[task.status];
+  const textColors = task.status === 'done'
+    ? 'text-gray-600'
+    : {
+      'high': 'text-red-800',
+      'medium': 'text-amber-800',
+      'low': 'text-emerald-800'
+    }[task.priority || 'low'];
 
   const getDueDateUrgency = (dueDate: string) => {
     const today = new Date();
