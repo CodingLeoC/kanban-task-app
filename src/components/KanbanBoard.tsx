@@ -14,6 +14,7 @@ export default function KanbanBoard() {
       status: 'todo',
       priority: 'low',
       dueDate: '2025-01-17',
+      comments: [],
     },
   ]);
   const [isAddTaskDialogOpen, setIsAddTaskDialogOpen] = useState(false);
@@ -40,6 +41,7 @@ export default function KanbanBoard() {
       status: 'todo',
       dueDate,
       priority,
+      comments: [],
     };
     setTasks([...tasks, newTask]);
   };
