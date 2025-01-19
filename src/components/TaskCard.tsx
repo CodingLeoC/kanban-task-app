@@ -5,9 +5,10 @@ import TaskDialog from './TaskDialog';
 interface TaskCardProps {
   task: Task;
   onDragStart: (e: React.DragEvent, taskId: string) => void;
+  onEditTask: (taskId: string, updatedTask: Partial<Task>) => void;
 }
 
-export default function TaskCard({ task, onDragStart }: TaskCardProps) {
+export default function TaskCard({ task, onDragStart, onEditTask }: TaskCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const backgroundColors = task.status === 'done' 
@@ -78,6 +79,7 @@ export default function TaskCard({ task, onDragStart }: TaskCardProps) {
         task={task}
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
+        onEditTask={onEditTask}
       />
     </>
   );

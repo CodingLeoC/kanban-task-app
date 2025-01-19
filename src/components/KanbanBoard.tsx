@@ -30,6 +30,12 @@ export default function KanbanBoard() {
     setTasks([...tasks, newTask]);
   };
 
+  const editTask = (taskId: string, updatedTask: Partial<Task>) => {
+    setTasks(tasks.map(task =>
+      task.id === taskId ? { ...task, ...updatedTask } : task
+    ));
+  };
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 flex gap-4 p-4">
@@ -38,24 +44,28 @@ export default function KanbanBoard() {
           tasks={tasks.filter(task => task.status === 'todo')}
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'todo')}
+          onEditTask={editTask}
         />
         <KanbanColumn
           title="In Progress"
           tasks={tasks.filter(task => task.status === 'in-progress')}
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'in-progress')}
+          onEditTask={editTask}
         />
         <KanbanColumn
           title="Pending"
           tasks={tasks.filter(task => task.status === 'pending')}
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'pending')}
+          onEditTask={editTask}
         />
         <KanbanColumn
           title="Done"
           tasks={tasks.filter(task => task.status === 'done')}
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'done')}
+          onEditTask={editTask}
         />
       </div>
     </div>

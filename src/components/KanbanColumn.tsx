@@ -6,9 +6,10 @@ interface KanbanColumnProps {
   tasks: Task[];
   onDragStart: (e: React.DragEvent, taskId: string) => void;
   onDrop: (e: React.DragEvent) => void;
+  onEditTask: (taskId: string, updatedTask: Partial<Task>) => void;
 }
 
-export default function KanbanColumn({ title, tasks, onDragStart, onDrop }: KanbanColumnProps) {
+export default function KanbanColumn({ title, tasks, onDragStart, onDrop, onEditTask }: KanbanColumnProps) {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
@@ -26,6 +27,7 @@ export default function KanbanColumn({ title, tasks, onDragStart, onDrop }: Kanb
             key={task.id}
             task={task}
             onDragStart={onDragStart}
+            onEditTask={onEditTask}
           />
         ))}
       </div>
