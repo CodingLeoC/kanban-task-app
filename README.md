@@ -4,7 +4,7 @@ A modern, responsive Kanban board application built with Next.js and TailwindCSS
 
 ## About This Project
 
-*This project serves as a demonstration of the capabilities of the AI code editor, Windsurf. Most of the codebase, including this README, was generated with the assistance of Windsurf. The goal is to explore the potential of this AI-powered tool and see how far it can take a development project.*
+_This project serves as a demonstration of the capabilities of the AI code editor, Windsurf. Most of the codebase, including this README, was generated with the assistance of Windsurf. The goal is to explore the potential of this AI-powered tool and see how far it can take a development project._
 
 ## Features
 

@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Kanban Task Manager",
-  description: "A simple and effective Kanban-style task management application",
+  title: 'Kanban Task Manager',
+  description: 'A simple and effective Kanban-style task management application',
 };
 
 export default function RootLayout({

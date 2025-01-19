@@ -74,7 +74,10 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                         />
                       </div>
                       <div>
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="description"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Description
                         </label>
                         <textarea
@@ -82,7 +85,9 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                           rows={3}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-600"
                           value={editedTask.description}
-                          onChange={(e) => setEditedTask({ ...editedTask, description: e.target.value })}
+                          onChange={(e) =>
+                            setEditedTask({ ...editedTask, description: e.target.value })
+                          }
                         />
                       </div>
                       <div>
@@ -93,7 +98,12 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                           id="status"
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-600"
                           value={editedTask.status}
-                          onChange={(e) => setEditedTask({ ...editedTask, status: e.target.value as Task['status'] })}
+                          onChange={(e) =>
+                            setEditedTask({
+                              ...editedTask,
+                              status: e.target.value as Task['status'],
+                            })
+                          }
                         >
                           <option value="todo">To Do</option>
                           <option value="in-progress">In Progress</option>
@@ -102,14 +112,22 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="priority"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Priority
                         </label>
                         <select
                           id="priority"
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-600"
                           value={editedTask.priority || 'low'}
-                          onChange={(e) => setEditedTask({ ...editedTask, priority: e.target.value as Task['priority'] })}
+                          onChange={(e) =>
+                            setEditedTask({
+                              ...editedTask,
+                              priority: e.target.value as Task['priority'],
+                            })
+                          }
                         >
                           <option value="low">Low</option>
                           <option value="medium">Medium</option>
@@ -117,7 +135,10 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="dueDate"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Due Date
                         </label>
                         <input
@@ -125,7 +146,9 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                           id="dueDate"
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm text-gray-600"
                           value={editedTask.dueDate || ''}
-                          onChange={(e) => setEditedTask({ ...editedTask, dueDate: e.target.value })}
+                          onChange={(e) =>
+                            setEditedTask({ ...editedTask, dueDate: e.target.value })
+                          }
                         />
                       </div>
                     </div>
@@ -140,17 +163,23 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                       <div className="flex flex-col gap-2">
                         <div>
                           <span className="text-sm font-medium text-gray-700">Status:</span>
-                          <span className="ml-2 text-sm text-gray-600 capitalize">{task.status}</span>
+                          <span className="ml-2 text-sm text-gray-600 capitalize">
+                            {task.status}
+                          </span>
                         </div>
                         <div>
                           <span className="text-sm font-medium text-gray-700">Due Date:</span>
                           <span className="ml-2 text-sm text-gray-600">
-                            {task.dueDate ? format(new Date(task.dueDate), 'MMM d, yyyy') : 'No due date'}
+                            {task.dueDate
+                              ? format(new Date(task.dueDate), 'MMM d, yyyy')
+                              : 'No due date'}
                           </span>
                         </div>
                         <div>
                           <span className="text-sm font-medium text-gray-700">Priority:</span>
-                          <span className="ml-2 text-sm text-gray-600 capitalize">{task.priority || 'Not set'}</span>
+                          <span className="ml-2 text-sm text-gray-600 capitalize">
+                            {task.priority || 'Not set'}
+                          </span>
                         </div>
                       </div>
                     </div>

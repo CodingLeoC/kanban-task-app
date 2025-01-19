@@ -5,7 +5,12 @@ import { Fragment, useState } from 'react';
 interface AddTaskDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddTask: (title: string, description: string, dueDate?: string, priority?: Task['priority']) => void;
+  onAddTask: (
+    title: string,
+    description: string,
+    dueDate?: string,
+    priority?: Task['priority']
+  ) => void;
 }
 
 export default function AddTaskDialog({ isOpen, onClose, onAddTask }: AddTaskDialogProps) {
@@ -69,7 +74,10 @@ export default function AddTaskDialog({ isOpen, onClose, onAddTask }: AddTaskDia
                     />
                   </div>
                   <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Description
                     </label>
                     <textarea
