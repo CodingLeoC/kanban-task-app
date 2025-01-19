@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import KanbanColumn from './KanbanColumn';
-import { Task } from '@/types';
+import { Comment, Task } from '@/types';
 import AddTaskDialog from './AddTaskDialog';
 
 export default function KanbanBoard() {
@@ -14,6 +14,7 @@ export default function KanbanBoard() {
       status: 'todo',
       priority: 'low',
       dueDate: '2025-01-17',
+      comments: [],
     },
   ]);
   const [isAddTaskDialogOpen, setIsAddTaskDialogOpen] = useState(false);
@@ -40,12 +41,29 @@ export default function KanbanBoard() {
       status: 'todo',
       dueDate,
       priority,
+      comments: [],
     };
     setTasks([...tasks, newTask]);
   };
 
   const editTask = (taskId: string, updatedTask: Partial<Task>) => {
     setTasks(tasks.map((task) => (task.id === taskId ? { ...task, ...updatedTask } : task)));
+  };
+
+  const addComment = (taskId: string, content: string) => {
+    const newComment: Comment = {
+      id: Date.now().toString(),
+      taskId,
+      content,
+      author: 'User',
+      createdAt: new Date(),
+    };
+
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, comments: [...task.comments, newComment] } : task
+      )
+    );
   };
 
   return (
@@ -65,6 +83,7 @@ export default function KanbanBoard() {
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'todo')}
           onEditTask={editTask}
+          onAddComment={addComment}
         />
         <KanbanColumn
           title="In Progress"
@@ -72,6 +91,7 @@ export default function KanbanBoard() {
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'in-progress')}
           onEditTask={editTask}
+          onAddComment={addComment}
         />
         <KanbanColumn
           title="Pending"
@@ -79,6 +99,7 @@ export default function KanbanBoard() {
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'pending')}
           onEditTask={editTask}
+          onAddComment={addComment}
         />
         <KanbanColumn
           title="Done"
@@ -86,6 +107,7 @@ export default function KanbanBoard() {
           onDragStart={handleDragStart}
           onDrop={(e) => handleDrop(e, 'done')}
           onEditTask={editTask}
+          onAddComment={addComment}
         />
       </div>
       <AddTaskDialog
