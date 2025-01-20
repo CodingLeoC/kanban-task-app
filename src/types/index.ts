@@ -6,6 +6,7 @@ export interface Task {
   dueDate?: string; // ISO date string, optional
   priority?: 'low' | 'medium' | 'high'; // optional priority field
   comments: Comment[];
+  createdAt?: Date; // Add this for Firestore timestamp
 }
 
 export interface Comment {
