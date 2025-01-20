@@ -1,4 +1,4 @@
-import { Task } from '@/types';
+import { Task, Comment } from '@/types';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { format } from 'date-fns';
@@ -13,6 +13,7 @@ interface TaskDialogProps {
 export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDialogProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState<Task>(task);
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     setEditedTask(task);
@@ -26,6 +27,21 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
   const handleCancel = () => {
     setEditedTask(task);
     setIsEditing(false);
+  };
+
+  const handleAddComment = () => {
+    if (!newComment.trim()) return;
+    
+    const comment: Comment = {
+      id: Date.now().toString(),
+      text: newComment.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedComments = [...(editedTask.comments || []), comment];
+    setEditedTask({ ...editedTask, comments: updatedComments });
+    onEditTask(task.id, { comments: updatedComments });
+    setNewComment('');
   };
 
   return (
@@ -181,6 +197,42 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                             {task.priority || 'Not set'}
                           </span>
                         </div>
+                      </div>
+                    </div>
+                    <div className="mt-6">
+                      <h4 className="text-md font-medium mb-2">Comments</h4>
+                      <div className="space-y-4">
+                        {editedTask.comments?.map((comment) => (
+                          <div
+                            key={comment.id}
+                            className="p-3 bg-gray-50 rounded-lg"
+                          >
+                            <p className="text-gray-800">{comment.text}</p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              {new Date(comment.createdAt).toLocaleString()}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 flex gap-2">
+                        <input
+                          type="text"
+                          value={newComment}
+                          onChange={(e) => setNewComment(e.target.value)}
+                          placeholder="Add a comment..."
+                          className="flex-1 p-2 border rounded-md text-gray-600"
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              handleAddComment();
+                            }
+                          }}
+                        />
+                        <button
+                          onClick={handleAddComment}
+                          className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+                        >
+                          Add
+                        </button>
                       </div>
                     </div>
                   </>
