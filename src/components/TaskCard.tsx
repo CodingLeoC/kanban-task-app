@@ -6,9 +6,10 @@ interface TaskCardProps {
   task: Task;
   onDragStart: (e: React.DragEvent, taskId: string) => void;
   onEditTask: (taskId: string, updatedTask: Partial<Task>) => void;
+  onAddComment: (taskId: string, content: string) => void;
 }
 
-export default function TaskCard({ task, onDragStart, onEditTask }: TaskCardProps) {
+export default function TaskCard({ task, onDragStart, onEditTask, onAddComment }: TaskCardProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const backgroundColors =
@@ -97,6 +98,7 @@ export default function TaskCard({ task, onDragStart, onEditTask }: TaskCardProp
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onEditTask={onEditTask}
+        onAddComment={onAddComment}
       />
     </>
   );

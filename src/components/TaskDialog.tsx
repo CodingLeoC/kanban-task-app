@@ -2,15 +2,24 @@ import { Task } from '@/types';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import { CommentList } from '@/components/CommentList';
+import { CommentForm } from '@/components/CommentForm';
 
 interface TaskDialogProps {
   task: Task;
   isOpen: boolean;
   onClose: () => void;
   onEditTask: (taskId: string, updatedTask: Partial<Task>) => void;
+  onAddComment: (taskId: string, content: string) => void;
 }
 
-export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDialogProps) {
+export default function TaskDialog({
+  task,
+  isOpen,
+  onClose,
+  onEditTask,
+  onAddComment,
+}: TaskDialogProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTask, setEditedTask] = useState<Task>(task);
 
@@ -184,6 +193,16 @@ export default function TaskDialog({ task, isOpen, onClose, onEditTask }: TaskDi
                       </div>
                     </div>
                   </>
+                )}
+
+                {!isEditing && (
+                  <div className="mt-6 border-t pt-6">
+                    <CommentList comments={task.comments} />
+                    <CommentForm
+                      taskId={task.id}
+                      onSubmit={(content) => onAddComment(task.id, content)}
+                    />
+                  </div>
                 )}
 
                 <div className="mt-6 flex gap-2">
