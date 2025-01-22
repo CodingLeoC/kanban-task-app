@@ -1,5 +1,6 @@
 import React from 'react';
 import { Comment } from '@/types';
+import { format } from 'date-fns';
 
 interface CommentListProps {
   comments: Comment[];
@@ -13,7 +14,9 @@ export const CommentList: React.FC<CommentListProps> = ({ comments }) => {
         <div key={comment.id} className="comment bg-gray-50 p-4 rounded-lg">
           <div className="comment-header flex justify-between text-sm text-gray-500 mb-2">
             <span className="comment-author font-medium">{comment.author}</span>
-            <span className="comment-date">{comment.createdAt.toLocaleDateString()}</span>
+            <span className="comment-date">
+              {format(new Date(comment.createdAt), 'MMM d, yyyy HH:mm')}
+            </span>
           </div>
           <p className="comment-content text-gray-700">{comment.content}</p>
         </div>

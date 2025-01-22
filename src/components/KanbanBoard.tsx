@@ -91,15 +91,16 @@ export default function KanbanBoard() {
         createdAt: new Date(),
       };
 
-      await addCommentToDb(taskId, newComment);
+      // Add comment to Firebase and get the complete comment object back
+      const savedComment = await addCommentToDb(taskId, newComment);
 
-      // Update local state
+      // Update local state with the saved comment
       setTasks(
         tasks.map((task) =>
           task.id === taskId
             ? {
                 ...task,
-                comments: [...task.comments, { ...newComment, id: Date.now().toString() }],
+                comments: [savedComment, ...task.comments],
               }
             : task
         )
