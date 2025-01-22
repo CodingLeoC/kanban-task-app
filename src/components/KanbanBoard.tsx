@@ -1,54 +1,81 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import KanbanColumn from './KanbanColumn';
 import { Task } from '@/types';
 import AddTaskDialog from './AddTaskDialog';
+import { tasksService } from '@/services/tasks';
 
 export default function KanbanBoard() {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: '1',
-      title: 'Example Task',
-      description: 'This is an example task',
-      status: 'todo',
-      priority: 'low',
-      dueDate: '2025-01-17',
-      comments: [],
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [isAddTaskDialogOpen, setIsAddTaskDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const loadTasks = async () => {
+    try {
+      const loadedTasks = await tasksService.getAllTasks();
+      setTasks(loadedTasks);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleDragStart = (e: React.DragEvent, taskId: string) => {
     e.dataTransfer.setData('taskId', taskId);
   };
 
-  const handleDrop = (e: React.DragEvent, status: 'todo' | 'in-progress' | 'pending' | 'done') => {
+  const handleDrop = async (e: React.DragEvent, status: 'todo' | 'in-progress' | 'pending' | 'done') => {
     const taskId = e.dataTransfer.getData('taskId');
-    setTasks(tasks.map((task) => (task.id === taskId ? { ...task, status } : task)));
+    try {
+      await tasksService.updateTask(taskId, { status });
+      setTasks(tasks.map((task) => (task.id === taskId ? { ...task, status } : task)));
+    } catch (error) {
+      console.error('Error updating task status:', error);
+    }
   };
 
-  const addTask = (
+  const addTask = async (
     title: string,
     description: string,
     dueDate?: string,
     priority?: Task['priority']
   ) => {
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title,
-      description,
-      status: 'todo',
-      dueDate,
-      priority,
-      comments: [],
-    };
-    setTasks([...tasks, newTask]);
+    try {
+      const newTask = await tasksService.createTask({
+        title,
+        description,
+        status: 'todo',
+        dueDate,
+        priority,
+      });
+      setTasks([...tasks, newTask]);
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
   };
 
-  const editTask = (taskId: string, updatedTask: Partial<Task>) => {
-    setTasks(tasks.map((task) => (task.id === taskId ? { ...task, ...updatedTask } : task)));
+  const editTask = async (taskId: string, updatedTask: Partial<Task>) => {
+    try {
+      await tasksService.updateTask(taskId, updatedTask);
+      setTasks(tasks.map((task) => (task.id === taskId ? { ...task, ...updatedTask } : task)));
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">
